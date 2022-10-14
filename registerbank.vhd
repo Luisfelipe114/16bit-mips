@@ -16,7 +16,7 @@ ENTITY registerfile IS
 END registerfile;
 
 ARCHITECTURE Behavioral OF registerfile IS
-    TYPE reg_array IS ARRAY (0 TO 15) OF STD_LOGIC_VECTOR (15 DOWNTO 0);
+    TYPE reg_array IS ARRAY (0 TO 11) OF STD_LOGIC_VECTOR (15 DOWNTO 0);
     TYPE reg_rd_fields IS ARRAY (0 TO 3) OF STD_LOGIC_VECTOR (15 DOWNTO 0);
     SIGNAL REGISTERS : reg_array := (OTHERS => x"0000");
     SIGNAL REGISTERS_RD : reg_rd_fields := (OTHERS => x"0000");
