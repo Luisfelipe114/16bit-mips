@@ -8,12 +8,12 @@ ENTITY control IS
         clk_in : IN STD_LOGIC;
         reset_in : IN STD_LOGIC;
         op_code_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
-        stage_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0));
+        stage_out : OUT STD_LOGIC_VECTOR (15 DOWNTO 0));
 
 END control;
 
 ARCHITECTURE Behavioral OF control IS
-    SIGNAL stage : STD_LOGIC_VECTOR(5 DOWNTO 0) := "1000000011000000";
+    SIGNAL stage : STD_LOGIC_VECTOR(15 DOWNTO 0) := "1000000011000000";
 
 BEGIN
     PROCESS (clk_in)
