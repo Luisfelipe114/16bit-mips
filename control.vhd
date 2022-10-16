@@ -41,7 +41,7 @@ BEGIN
                         ELSIF op_code_in(5 DOWNTO 4) = "11" THEN
                             stage <= "0000000000110000"; -- 5
                         ELSIF op_code_in(5 DOWNTO 4) = "00" OR op_code_in(5 DOWNTO 4) = "01" THEN
-                            stage <= "0000000000001000"; -- 4
+                            stage <= "0000000000010000"; -- 4
                         END IF;
 
                     WHEN "0110000000000000" => -- 3
@@ -61,7 +61,7 @@ BEGIN
                         ELSIF op_code_in = "100000" OR op_code_in = "100011" THEN
                             stage <= "0000001010000000"; -- 12
                         ELSIF op_code_in = "100010" THEN
-                            stage <= "0111001100010000"; -- 18
+                            stage <= "0111001100000000"; -- 18
                         ELSIF op_code_in(5 DOWNTO 4) = "10" THEN
                             stage <= "0000001100000000"; -- 17
 
@@ -86,11 +86,7 @@ BEGIN
                         stage <= "1000000011000000"; -- 1
 
                     WHEN "0000000000011000" => -- 11
-                        IF op_code_in = "100010" THEN
-                            stage <= "0000000000010000"; -- 18
-                        ELSE
-                            stage <= "0000000000010000"; -- 4
-                        END IF;
+                        stage <= "0000000000010000"; -- 4
 
                     WHEN "0000001010000000" => -- 12                            
                         IF op_code_in = "100011" THEN
