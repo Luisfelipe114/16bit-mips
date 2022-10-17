@@ -9,10 +9,13 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity ula_controle is
     Port( clk_in : in STD_LOGIC;
+			pop : in STD_LOGIC;
+			store_word : in STD_LOGIC;
+			pc_increment : in STD_LOGIC;
 			codop_signal : in STD_LOGIC_VECTOR(3 downto 0);
 			enable_in : in STD_LOGIC;
-			alu_op_in : in STD_LOGIC_VECTOR (1 downto 0);
-			result_out : out STD_LOGIC_VECTOR (3 downto 0)
+			alu_op_control_in : in STD_LOGIC_VECTOR (1 downto 0);
+			result_out : out STD_LOGIC_VECTOR (5 downto 0)
         );
 end ula_controle;
 
@@ -21,9 +24,9 @@ architecture Behavioral of ula_controle is
 begin
     process(clk_in)
     begin
-	case alu_op_in (1 downto 0) is
+	case alu_op_control_in (1 downto 0) is
 		when "00" =>
-	   		case codop_signal (3 downto 0) is
+			case codop_signal (3 downto 0) is
 				when "0000" =>--AND 
 					result_out <= "000000"; --sinal pra ula
 				when "0001" =>--SUB
@@ -56,10 +59,11 @@ begin
 					result_out <= "100001";
 				when "1111" =>-- MFL
 					result_out <= "100010";
-				
+				when others =>
+					NULL;
 			end case;
 		when "01" =>
-	   		case codop_signal (3 downto 0) is
+			case codop_signal (3 downto 0) is
 				when "0000" =>--ADDIS
 					result_out <= "001010";--sinal pra ula
 				when "0001" =>--SUBIS
@@ -79,35 +83,74 @@ begin
 				when "1000" =>--NORI			
 					result_out <= "010010";
 				when "1001"=> --NANDI		
-					result_out <= "010011";
+					result_out <= "010011";	
+				when others =>
+					null;
 			end case;
+
 		when "10" =>
-	   		case codop_signal (3 downto 0) is
+			case codop_signal (3 downto 0) is
 				when "0010" =>--SUB SP(PUSH)
 					result_out <= "011100";--sinal pra ula
+					
 				when "0011" =>--ADD SP(POP)
-					result_out <= "011100";
-				
+					case pop is 
+						when '1' =>
+							result_out <= "011101";
+						when '0' =>
+							result_out <= "011110";
+						when others =>
+							NULL;
+					end case;
+					
+				when "0000" => --LW
+					result_out <= "100100";
+					
+				when "0001" => --SW
+					case store_word is 
+						when '0' => 
+							result_out <= "100100"; --transparencia rM
+						when '1' =>
+							result_out <= "011110"; --transparencia rN
+						when others =>
+							NULL;
+					end case;
+				when others =>
+					null;
 			end case;	 
+			
 				 
 		when "11" =>
-	   		case codop_signal (3 downto 0) is
-				when "0000" =>--JUMP/JAL
-					result_out <= "010100";--sinal pra ula
-				when "0001" =>--JAL/JRL
-					result_out <= "010101";
-				when "0010"=> --JR
-					result_out <= "010110";
-				when "0011" =>--JGTZ
-					result_out <= "010111";
-				when "0100" =>--JLTZ
-					result_out <= "011000";
-				when "0101" =>--JNEZ
-					result_out <= "011001";
-				when "0101" =>--JIEZ
-					result_out <= "011010";
-					
-			end case;		
+			case pc_increment is 
+				when '1' =>  
+					result_out <= "010101";--JR/JRL
+				when '0' =>
+					case codop_signal (3 downto 0) is
+						when "0000" =>--JUMP
+							result_out <= "010100";--sinal pra ula
+						when "0001" =>--JAL
+							result_out <= "010100";
+						when "0010"=> --JR
+							result_out <= "010110";
+						when "0011"=> --JRL
+							result_out <= "010110";
+						when "0100" =>--JGTZ
+							result_out <= "010111";
+						when "0101" =>--JLTZ
+							result_out <= "011000";
+						when "0110" =>--JNEZ
+							result_out <= "011001";
+						when "0111" =>--JIEZ
+							result_out <= "011010";
+						when others =>
+							null;
+							
+					end case;
+				when others =>
+					NULL;
+			end case;
+		when others =>
+			NULL;
 	end case;
 	end process;
 
