@@ -30,7 +30,9 @@ ARCHITECTURE Type_0 OF testbench_cpu IS
 
         SIGNAL Signal_Stage : STD_LOGIC_VECTOR (16 DOWNTO 0) := (OTHERS => '0');
         SIGNAL Signal_Clk : STD_LOGIC := '0';
+
         SIGNAL Signal_Reset : STD_LOGIC := '0';
+
         SIGNAL Signal_instruction : STD_LOGIC_VECTOR (15 DOWNTO 0) := (OTHERS => '0');
         SIGNAL Signal_register_data : STD_LOGIC_VECTOR (15 DOWNTO 0) := (OTHERS => '0');
         SIGNAL Signal_memory_data : STD_LOGIC_VECTOR (15 DOWNTO 0) := (OTHERS => '0');
@@ -60,12 +62,15 @@ BEGIN
                 Clk_count <= Clk_count + 1;
                 WAIT FOR Clk_period/2; --for next 0.5 ns signal is '1'.
 
+
                 IF (Clk_count = 200) THEN
+
                         REPORT "Stopping simulation after 9 cycles";
                         WAIT;
                 END IF;
 
         END PROCESS Clock_Process;
+
 		  
 		  Reset_Process : PROCESS 
 			Begin
@@ -77,9 +82,11 @@ BEGIN
 			 wait;
 		 END PROCESS Reset_Process;
 
+
         Input_Process : PROCESS
         BEGIN
                 WAIT FOR 20 ns;
+
                 Signal_instruction <= "0100100000000010"; --loi --passa 10(2) para ac0
                 Signal_ctrl_enable <= '1';
                 
@@ -138,11 +145,13 @@ BEGIN
                 Signal_instruction <= "0011110000000000"; --mfl
 					 
 					 
+
                 WAIT FOR Clk_period * 4;
 
                 -- operações com imediato
 
                 Signal_instruction <= "0100000010001111"; --addis
+
 					 
                 WAIT FOR Clk_period * 4;
                 Signal_instruction <= "0100010010001111"; --subis
@@ -171,10 +180,12 @@ BEGIN
                 WAIT FOR Clk_period * 4;
                 Signal_instruction <= "0110010000001111"; --nandi
 					 
+
                 WAIT FOR Clk_period * 4;
                 --operacoes com acesso a memória
 
                 Signal_instruction <= "1000000000010000"; --lwr
+
 					 
                 WAIT FOR Clk_period * 5;
                 Signal_instruction <= "1000010000010000"; --swr
@@ -223,6 +234,7 @@ BEGIN
                 Signal_instruction <= "0100100100000001"; --loi
 					 
                 WAIT FOR Clk_period * 4;
+
                 Signal_instruction <= "1101110100000011"; --jize
                 WAIT FOR Clk_period * 5;
                 WAIT;
