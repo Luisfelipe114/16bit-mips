@@ -60,7 +60,7 @@ BEGIN
 		Clk_count <= Clk_count + 1;
 		WAIT FOR Clk_period/2; --for next 0.5 ns signal is '1'.
 
-		IF (Clk_count = 9) THEN
+		IF (Clk_count = 13) THEN
 			REPORT "Stopping simulation after 9 cycles";
 			WAIT;
 		END IF;
@@ -69,13 +69,14 @@ BEGIN
 
 	Input_Process : PROCESS
 	BEGIN
-
 		WAIT FOR 20 ns;
 		Signal_instruction <= "0100100000000010";
 		Signal_ctrl_enable <= '1';
 		WAIT FOR Clk_period;
 		Signal_Reset <= '0';
 		WAIT FOR Clk_period * 2;
+		Signal_instruction <= "0100100100000011";
+		WAIT FOR clk_period * 4;
 		Signal_instruction <= "0010100000010000";
 		WAIT;
 	END PROCESS;
