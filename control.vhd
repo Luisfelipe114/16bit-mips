@@ -7,19 +7,20 @@ ENTITY control IS
     PORT (
         clk_in : IN STD_LOGIC;
         reset_in : IN STD_LOGIC := '1';
+        enable_in : IN STD_LOGIC := '0';
         op_code_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
         stage_out : OUT STD_LOGIC_VECTOR (16 DOWNTO 0));
 
 END control;
 
 ARCHITECTURE Behavioral OF control IS
-    SIGNAL stage : STD_LOGIC_VECTOR(16 DOWNTO 0) := "10000000110000000";
+    SIGNAL stage : STD_LOGIC_VECTOR(16 DOWNTO 0) := "00000000000000000";
     --SIGNAL stage : STD_LOGIC_VECTOR(16 DOWNTO 0) := "00000000000000000";
 
 BEGIN
     PROCESS (clk_in)
     BEGIN
-        IF rising_edge(clk_in) THEN
+        IF rising_edge(clk_in) AND enable_in = '1' THEN
             IF reset_in = '1' THEN
                 stage <= "10000000110000000";
             ELSE
@@ -55,7 +56,7 @@ BEGIN
                             stage <= "00001000000000000"; -- 7
                         ELSIF op_code_in = "001010" THEN
                             stage <= "01010000000000000"; -- 8
-                        ELSIF op_code_in(5 DOWNTO 4) = "00" or op_code_in(5 downto 4) = "01" THEN
+                        ELSIF op_code_in(5 DOWNTO 4) = "00" OR op_code_in(5 DOWNTO 4) = "01" THEN
                             stage <= "01000000000000000"; -- 9
                         ELSIF op_code_in = "000101" THEN
                             stage <= "01011000000000000"; -- 10
@@ -119,7 +120,7 @@ BEGIN
                         stage <= "10000000110000000"; -- 1
 
                     WHEN OTHERS =>
-                        stage <= "10000000110000000";
+                        stage <= "00000000000000000";
                         --stage <= "00000000000000000";
                 END CASE;
             END IF;
