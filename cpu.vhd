@@ -108,7 +108,7 @@ END COMPONENT;
 COMPONENT control
 	PORT (
 	  clk_in : IN STD_LOGIC;
-	  reset_in : IN STD_LOGIC;
+	  reset_in : IN STD_LOGIC := '1';
 	  op_code_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
 	  stage_out : OUT STD_LOGIC_VECTOR (16 DOWNTO 0)
 	);

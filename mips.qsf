@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CGXFC7C7F23C8
-set_global_assignment -name TOP_LEVEL_ENTITY mips
+set_global_assignment -name TOP_LEVEL_ENTITY cpu
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "22:28:32  OCTOBER 05, 2022"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
@@ -46,9 +46,31 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name VHDL_FILE ula_controle.vhd
+set_global_assignment -name VHDL_FILE ula.vhd
+set_global_assignment -name VHDL_FILE testbench_ula.vhd
+set_global_assignment -name VHDL_FILE testbench_rlh.vhd
+set_global_assignment -name VHDL_FILE testbench_registerbank.vhd
+set_global_assignment -name VHDL_FILE testbench_cpu.vhd
+set_global_assignment -name VHDL_FILE rlh.vhd
+set_global_assignment -name VHDL_FILE registerbank.vhd
+set_global_assignment -name VHDL_FILE pc_unit.vhd
+set_global_assignment -name VHDL_FILE cpu.vhd
 set_global_assignment -name VHDL_FILE instruction_register.vhd
 set_global_assignment -name VHDL_FILE control.vhd
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH testbench_cpu -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME testbench_cpu -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id testbench_cpu
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "500 ns" -section_id testbench_cpu
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME testbench_cpu -section_id testbench_cpu
+set_global_assignment -name EDA_TEST_BENCH_FILE testbench_cpu.vhd -section_id testbench_cpu
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

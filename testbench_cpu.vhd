@@ -33,7 +33,7 @@ SIGNAL Clk_count : INTEGER := 0;
 
 SIGNAL Signal_Stage : STD_LOGIC_VECTOR (16 downto 0) := (others => '0');
 SIGNAL Signal_Clk : STD_LOGIC := '0';
-SIGNAL Signal_Reset : STD_LOGIC := '0';
+SIGNAL Signal_Reset : STD_LOGIC := '1';
 SIGNAL Signal_instruction : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
 SIGNAL Signal_register_data : STD_LOGIC_VECTOR (15 downto 0) := (others => '0'); 
 SIGNAL Signal_memory_data : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
@@ -73,8 +73,10 @@ End Process Clock_Process;
 Input_Process : PROCESS 
 	BEGIN	
 	
+		wait for 20 ns;
+		Signal_instruction <= "0100100000000010";
 		wait for 40 ns;
-		 Signal_instruction <= "0100100000000010";
+		Signal_Reset <= '0';
 		
 
 End Process;
