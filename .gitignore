@@ -50,8 +50,11 @@
 *.sopc_builder
 *.summary
 *.tcl
-*.txt # Explicitly add any text files used
+*.txt
+# Explicitly add any text files used
 *~
+
+
 *example*
 *sopc_*
 # *.sdc # I want those timing files
@@ -60,6 +63,7 @@
 */db/
 */incremental_db/
 */simulation/
+*/output_files
 */timing/
 */testbench/
 */*_sim/
@@ -67,3 +71,36 @@ incremental_db/
 db/
 _output_files/
 PLLJ_PLLSPE_INFO.txt
+
+# ignore ModelSim generated files and directories (temp files and so on)
+[_@]*
+
+# ignore compilation output of ModelSim
+*.mti
+*.dat
+*.dbs
+*.psm
+*.bak
+*.cmp
+*.jpg
+*.html
+*.bsf
+*.sft
+*.vho
+*.ini
+msim_transcript
+*.mif
+*.xrf
+
+# ignore simulation output of ModelSim
+wlf*
+*.wlf
+*.vstf
+*.ucdb
+cov*/
+transcript*
+sc_dpiheader.h
+vsim.dbg
+*.do.*
+*.do
+
