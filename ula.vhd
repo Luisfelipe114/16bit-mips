@@ -91,7 +91,6 @@ begin
 				branch_out <= '0';
 				
 			when "000100"  => --SRA
-				--CONSERTAR -- TA ERRADO
 				result_out <= STD_LOGIC_VECTOR(shift_right(signed(rM_data_in), to_integer(unsigned((shift_data_in)))));
 				branch_out <= '0';
 
@@ -122,11 +121,11 @@ begin
 				branch_out <= '0';
 				 
 			when "001010" => -- ADDIS
-				result_out <= STD_LOGIC_VECTOR(signed(rM_data_in) + resize(signed((imm_data_in(7) & imm_data_in)), 16));
+				result_out <= STD_LOGIC_VECTOR(signed(rN_data_in) + resize(signed((imm_data_in(7) & imm_data_in)), 16));
 				branch_out <= '0';
 				
 			when "001011" => -- SUBIS
-				result_out <= STD_LOGIC_VECTOR(signed(rM_data_in) - resize(signed((imm_data_in(7) & imm_data_in)), 16));
+				result_out <= STD_LOGIC_VECTOR(signed(rN_data_in) - resize(signed((imm_data_in(7) & imm_data_in)), 16));
 				branch_out <= '0';
 			
 			when "001100" => -- LOI
@@ -160,18 +159,19 @@ begin
 			when "010011" => -- NANDI
 				result_out <= rM_data_in nand (x"00" & imm_data_in);
 				branch_out <= '0';
+				
 			--TIPO J
 				
 			when "010100" => -- JUMP/JAL(parte 2 do JAL)
 				result_out <= pc_in(15 downto 10) & j_imm_data_in;
 				branch_out <= '1';
 					  
-			when "010101" => -- JAL/JRL(parte 1 do JRL)
+			when "010101" => -- PC Increment
 				result_out <= pc_in + constant_1;
 				branch_out <= '1';
 			
 			when "010110" => -- JR/JRL (parte 2 do JRL)
-				result_out <= rM_data_in;
+				result_out <= rN_data_in;
 				branch_out <= '1';
 				
 			when "010111" => -- JGTZ
@@ -183,7 +183,7 @@ begin
 				END IF;
 			
 			when "011000" => -- JLTZ
-				IF rM_data_in < constant_0 THEN
+				IF rN_data_in < constant_0 THEN
 					result_out <= pc_in + constant_1 + (x"00" & imm_data_in);
 					branch_out <= '1';
 				ELSE 
@@ -191,7 +191,7 @@ begin
 				END IF;
 				
 			when "011001" => -- JNEZ
-				IF rM_data_in /= constant_0 THEN
+				IF rN_data_in /= constant_0 THEN
 					result_out <= pc_in + constant_1 + (x"00" & imm_data_in);
 					branch_out <= '1';
 				ELSE 
@@ -199,7 +199,7 @@ begin
 				END IF;
 				
 			when "011010" => -- JIEZ
-				IF rM_data_in = constant_0 THEN
+				IF rN_data_in = constant_0 THEN
 					result_out <= pc_in + constant_1 + (x"00" & imm_data_in);
 					branch_out <= '1';
 				ELSE 
@@ -220,7 +220,7 @@ begin
 			when "011101" => --ADD SP(POP)
 				result_out <= rM_data_in + constant_1;
 				
-			when "011110" => --MFAC
+			when "011110" => --MFAC (transparencia rN(pop/sw)) 
 				result_out <= rN_data_in;
 				
 			when "011111" => --MTAC
@@ -235,6 +235,10 @@ begin
 			when "100011" => --MTL
 				rlh_data_out(31 downto 16) <= constant_0;
 				rlh_data_out(15 downto 0) <= rM_data_in;
+				
+			when "100100" => --transparencia rM(sw/lw)
+				result_out <= rM_data_in;
+
 				
 			when others => 
 				NULL;
