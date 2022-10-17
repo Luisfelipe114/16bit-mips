@@ -95,47 +95,47 @@ BEGIN
                 WAIT FOR Clk_period * 4;
                 Signal_instruction <= "0000001000010010"; --add --soma rf1(reg 1) e rf2(reg2) e bota em rd 
 					 
-                WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0000011000100001"; --sub
+                WAIT FOR Clk_period * 4; 
+                Signal_instruction <= "0000011000100001"; --sub --Sub de Rf2 e Rf1 => Resultado: Rd(AC2) = 0000 0000 0000 0001
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0000101000010010"; --sll
+                Signal_instruction <= "0000101000010010"; --sll --Sll do Rf1 de 2 bits => Resultado: Rd(AC2) = Rf1 << 2 
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0000111000010010"; --slr
+                Signal_instruction <= "0000111000010010"; --slr --Slr do Rf1 de 2 bits => 000011 10 0001 0010 => Resultado: Rd(AC2) = Rf1 >> 2
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0001001000010010"; --sra
+                Signal_instruction <= "0001001000010010"; --sra --Sra do Rf1 de 2 bits => Resultado: Rd(AC2) = Rf1 aritmético
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0001010000010010"; --Tadm
+                Signal_instruction <= "0001010000010010"; --Tadm --Reg usado: Registrador 1(indicado por rf1; dado = 10(2)) 
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0001101100010010"; --and
+                Signal_instruction <= "0001101100010010"; --and --And do Rf1 e do Rf2 => Rd(AC3) = 0000 0000 0000 0010
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0001111100010010"; --or
+                Signal_instruction <= "0001111100010010"; --or --Or do Rf1 e do Rf2 => Rd(AC3) = 0000 0000 0000 0011
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0010001100010010"; --xor
+                Signal_instruction <= "0010001100010010"; --xor --Xor do Rf1 e do Rf2 => Rd(AC3) = 0000 0000 0000 0001
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0010011100010010"; --nor
+                Signal_instruction <= "0010011100010010"; --nor --Nor do Rf1 e do Rf2 => Rd(AC3) = 1111 1111 1111 1100
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0011001100010010"; --slt
+                Signal_instruction <= "0011001100010010"; --slt --Slt do Rf1 para o Rf2 => Rd(AC3) = 0000 0000 0000 0001
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0011001100100001"; --slt
+                Signal_instruction <= "0011001100100001"; --slt --Slt do Rf2 para o Rf1 => Rd(AC3) = 0000 0000 0000 0000
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0011010000000000"; --mtl
+                Signal_instruction <= "0011010000000000"; --mtl --Mtl do AC0 => RLH = 0000 0000 0000 0000 0000 0000 0000 0010
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0011100000000000"; --mfh
+                Signal_instruction <= "0011100000000000"; --mfh --Mfh do AC0 => Rd(AC0) = 0000 0000 0000 0000
 					 
                 WAIT FOR Clk_period * 4;
-                Signal_instruction <= "0011110000000000"; --mfl
+                Signal_instruction <= "0011110000000000"; --mfl --Mfl do AC0 => Rd(AC0) = 0000 0000 0000 0010
 					 
 					 
                 WAIT FOR Clk_period * 4;

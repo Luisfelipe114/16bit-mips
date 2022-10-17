@@ -48,29 +48,7 @@ begin
   if rising_edge(clk_in) and enable_in='1' then
 
   
-		--rD_write_enable_out <= rD_write_enable_in;
 		
-		--signed_sub <= STD_LOGIC_VECTOR(signed(rM_data_in) - signed(rN_data_in));
-		--signed_add <= STD_LOGIC_VECTOR(signed(rM_data_in) + signed(rN_data_in));
-		
-		-- Positive overflow chance
-		--if rM_data_in(rM_data_in'left) = '0' and rN_data_in(rN_data_in'left) = '0' then
-			 --bothpos <= '1';
-		--else
-			 --bothpos <= '0';
-		--end if;
-		-- Negative overflow chance
-		--if rM_data_in(rM_data_in'left) = '1' and rN_data_in(rN_data_in'left) = '1' then
-			 --bothneg <= '1';
-		--else
-			 --bothneg <= '0';
-		--end if;
-		-- check for overflow
-		--if (signed(signed_add) < 0 and bothpos = '1') or (signed(signed_add) > 0 and bothneg = '1') then
-			 --overflow <= '1';
-		--else
-			 --overflow <= '0';
-		--end if;
 		
 		case alu_op_in(5 downto 0) is -- 3-0 is opcode, alu_on_in(4) is condition bit
 			when "000000" => -- ADD 
@@ -213,31 +191,40 @@ begin
 					result_out <= constant_0;
 					
 				END IF;
+				branch_out <= '0';
 					
 			when "011100" => --SUB SP(PUSH)
 				result_out <= rM_data_in - constant_1;
+				branch_out <= '0';
 				
 			when "011101" => --ADD SP(POP)
 				result_out <= rM_data_in + constant_1;
+				branch_out <= '0';
 				
 			when "011110" => --MFAC (transparencia rN(pop/sw)) 
 				result_out <= rN_data_in;
+				branch_out <= '0';
 				
 			when "011111" => --MTAC
 				result_out <= rM_data_in;
+				branch_out <= '0';
 				
 			when "100001" => --MFH
 				result_out <= rlh_data_in(31 downto 16);
+				branch_out <= '0';
 				
 			when "100010" => --MFL
 				result_out <= rlh_data_in(15 downto 0);
+				branch_out <= '0';
 				
 			when "100011" => --MTL
 				rlh_data_out(31 downto 16) <= constant_0;
 				rlh_data_out(15 downto 0) <= rM_data_in;
+				branch_out <= '0';
 				
 			when "100100" => --transparencia rM(sw/lw)
 				result_out <= rM_data_in;
+				branch_out <= '0';
 
 				
 			when others => 
