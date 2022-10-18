@@ -9,7 +9,8 @@ ENTITY cpu IS
 		ctrl_enable : IN STD_LOGIC := '0';
 		instruction : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 		register_data : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
-		memory_data : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
+		memory_data : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
+		memory_write_data : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
 		pc_data_jump : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
 		current_stage : OUT STD_LOGIC_VECTOR (16 DOWNTO 0)
 	);
@@ -202,14 +203,14 @@ BEGIN
 	Signal_store_word <= Signal_stage(0); -- store_word
 
 	-- GERAÇÃO DOS SINAIS DE SAÍDA
-	Signal_Reg_write_data <= Signal_memory_data WHEN Signal_mem_to_reg = '1' ELSE
+	Signal_Reg_write_data <= memory_data WHEN Signal_mem_to_reg = '1' ELSE
 		Signal_result_ula;
 	Signal_memory_address <= Signal_pc_out WHEN Signal_IorD = '0' ELSE
 		Signal_result_ula;
 
 	--SINAIS PARA TESTEBENCH
 	register_data <= Signal_Reg_write_data;
-	memory_data <= Signal_result_ula;
+	memory_write_data <= Signal_Reg_read1_data;
 	pc_data_jump <= Signal_pc_out;
 	current_stage <= Signal_stage;
 

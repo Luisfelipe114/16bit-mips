@@ -1,157 +1,153 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use std.textio.all;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE std.textio.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
-use IEEE.NUMERIC_STD.ALL;
+USE IEEE.NUMERIC_STD.ALL;
 
-entity ula_controle is
-    Port( clk_in : in STD_LOGIC;
-			pop : in STD_LOGIC;
-			store_word : in STD_LOGIC;
-			pc_increment : in STD_LOGIC;
-			codop_signal : in STD_LOGIC_VECTOR(3 downto 0);
-			enable_in : in STD_LOGIC;
-			alu_op_control_in : in STD_LOGIC_VECTOR (1 downto 0);
-			result_out : out STD_LOGIC_VECTOR (5 downto 0)
-        );
-end ula_controle;
+ENTITY ula_controle IS
+	PORT (
+		clk_in : IN STD_LOGIC;
+		pop : IN STD_LOGIC;
+		store_word : IN STD_LOGIC;
+		pc_increment : IN STD_LOGIC;
+		codop_signal : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+		enable_in : IN STD_LOGIC;
+		alu_op_control_in : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
+		result_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0)
+	);
+END ula_controle;
 
-architecture Behavioral of ula_controle is
+ARCHITECTURE Behavioral OF ula_controle IS
 
-begin
-    process(clk_in)
-    begin
-	case alu_op_control_in (1 downto 0) is
-		when "00" =>
-			case codop_signal (3 downto 0) is
-				when "0000" =>--AND 
-					result_out <= "000000"; --sinal pra ula
-				when "0001" =>--SUB
-					result_out <= "000001";
-				when "0010" =>--LSL
-					result_out <= "000010";
-				when "0011" =>--LSR
-					result_out <= "000011";
-				when "0100" =>--SRA
-					result_out <= "000100";
-				when "0101" =>--TADM
-					result_out <= "000101";
-				when "0110" =>--AND
-					result_out <= "000110";
-				when "0111" =>--OR
-					result_out <= "000111";
-				when "1000" => --XOR
-					result_out <= "001000";
-				when "1001" =>--NOR
-					result_out <= "001001";
-				when "1010" =>--MFAC
-					result_out <= "011110";
-				when "1011" =>--MTAC
-					result_out <= "011111";
-				when "1100" =>--SLT
-					result_out <= "011011";
-				when "1101" =>--MTL
-					result_out <= "100011";
-				when "1110" =>-- MFH
-					result_out <= "100001";
-				when "1111" =>-- MFL
-					result_out <= "100010";
-				when others =>
-					NULL;
-			end case;
-		when "01" =>
-			case codop_signal (3 downto 0) is
-				when "0000" =>--ADDIS
-					result_out <= "001010";--sinal pra ula
-				when "0001" =>--SUBIS
-					result_out <= "001011";
-				when "0010" =>--LOI
-					result_out <= "001100";
-				when "0011" =>--LUI
-					result_out <= "001101";
-				when "0100" =>--LIS				
-					result_out <= "001110";
-				when "0101"=> --ANDI				
-					result_out <= "001111";
-				when "0110" =>--ORI			
-					result_out <= "010000";
-				when "0111"=> --XORI			
-					result_out <= "010001";
-				when "1000" =>--NORI			
-					result_out <= "010010";
-				when "1001"=> --NANDI		
-					result_out <= "010011";	
-				when others =>
-					null;
-			end case;
+BEGIN
+	PROCESS (clk_in)
+	BEGIN
+		CASE alu_op_control_in (1 DOWNTO 0) IS
+			WHEN "00" =>
+				CASE codop_signal (3 DOWNTO 0) IS
+					WHEN "0000" => --AND 
+						result_out <= "000000"; --sinal pra ula
+					WHEN "0001" => --SUB
+						result_out <= "000001";
+					WHEN "0010" => --LSL
+						result_out <= "000010";
+					WHEN "0011" => --LSR
+						result_out <= "000011";
+					WHEN "0100" => --SRA
+						result_out <= "000100";
+					WHEN "0101" => --TADM
+						result_out <= "000101";
+					WHEN "0110" => --AND
+						result_out <= "000110";
+					WHEN "0111" => --OR
+						result_out <= "000111";
+					WHEN "1000" => --XOR
+						result_out <= "001000";
+					WHEN "1001" => --NOR
+						result_out <= "001001";
+					WHEN "1010" => --MFAC
+						result_out <= "011110";
+					WHEN "1011" => --MTAC
+						result_out <= "011111";
+					WHEN "1100" => --SLT
+						result_out <= "011011";
+					WHEN "1101" => --MTL
+						result_out <= "100011";
+					WHEN "1110" => -- MFH
+						result_out <= "100001";
+					WHEN "1111" => -- MFL
+						result_out <= "100010";
+					WHEN OTHERS =>
+						NULL;
+				END CASE;
+			WHEN "01" =>
+				CASE codop_signal (3 DOWNTO 0) IS
+					WHEN "0000" => --ADDIS
+						result_out <= "001010";--sinal pra ula
+					WHEN "0001" => --SUBIS
+						result_out <= "001011";
+					WHEN "0010" => --LOI
+						result_out <= "001100";
+					WHEN "0011" => --LUI
+						result_out <= "001101";
+					WHEN "0100" => --LIS				
+						result_out <= "001110";
+					WHEN "0101" => --ANDI				
+						result_out <= "001111";
+					WHEN "0110" => --ORI			
+						result_out <= "010000";
+					WHEN "0111" => --XORI			
+						result_out <= "010001";
+					WHEN "1000" => --NORI			
+						result_out <= "010010";
+					WHEN "1001" => --NANDI		
+						result_out <= "010011";
+					WHEN OTHERS =>
+						NULL;
+				END CASE;
 
-		when "10" =>
-			case codop_signal (3 downto 0) is
-				when "0010" =>--SUB SP(PUSH)
-					result_out <= "011100";--sinal pra ula
-					
-				when "0011" =>--ADD SP(POP)
-					case pop is 
-						when '1' =>
-							result_out <= "011101";
-						when '0' =>
-							result_out <= "011110";
-						when others =>
-							NULL;
-					end case;
-					
-				when "0000" => --LW
-					result_out <= "100100";
-					
-				when "0001" => --SW
-					case store_word is 
-						when '0' => 
-							result_out <= "100100"; --transparencia rM
-						when '1' =>
-							result_out <= "011110"; --transparencia rN
-						when others =>
-							NULL;
-					end case;
-				when others =>
-					null;
-			end case;	 
-			
-				 
-		when "11" =>
-			case pc_increment is 
-				when '1' =>  
+			WHEN "10" =>
+				CASE codop_signal (3 DOWNTO 0) IS
+					WHEN "0010" => --SUB SP(PUSH)
+						result_out <= "011100";--sinal pra ula
+
+					WHEN "0011" => --ADD SP(POP)
+						CASE pop IS
+							WHEN '1' =>
+								result_out <= "011101";
+							WHEN '0' =>
+								result_out <= "011110";
+							WHEN OTHERS =>
+								NULL;
+						END CASE;
+
+					WHEN "0000" => --LW
+						result_out <= "100100";
+
+					WHEN "0001" => --SW
+						CASE store_word IS
+							WHEN '0' =>
+								result_out <= "100100"; --transparencia rM
+							WHEN '1' =>
+								result_out <= "011110"; --transparencia rN
+							WHEN OTHERS =>
+								NULL;
+						END CASE;
+					WHEN OTHERS =>
+						NULL;
+				END CASE;
+			WHEN "11" =>
+				IF pc_increment = '1' AND ((codop_signal = "0001") OR (codop_signal = "0010")) THEN
 					result_out <= "010101";--JR/JRL
-				when '0' =>
-					case codop_signal (3 downto 0) is
-						when "0000" =>--JUMP
+				ELSE
+					CASE codop_signal (3 DOWNTO 0) IS
+						WHEN "0000" => --JUMP
 							result_out <= "010100";--sinal pra ula
-						when "0001" =>--JAL
+						WHEN "0001" => --JAL
 							result_out <= "010100";
-						when "0010"=> --JR
+						WHEN "0010" => --JR
 							result_out <= "010110";
-						when "0011"=> --JRL
+						WHEN "0011" => --JRL
 							result_out <= "010110";
-						when "0100" =>--JGTZ
+						WHEN "0100" => --JGTZ
 							result_out <= "010111";
-						when "0101" =>--JLTZ
+						WHEN "0101" => --JLTZ
 							result_out <= "011000";
-						when "0110" =>--JNEZ
+						WHEN "0110" => --JNEZ
 							result_out <= "011001";
-						when "0111" =>--JIEZ
+						WHEN "0111" => --JIEZ
 							result_out <= "011010";
-						when others =>
-							null;
-							
-					end case;
-				when others =>
-					NULL;
-			end case;
-		when others =>
-			NULL;
-	end case;
-	end process;
+						WHEN OTHERS =>
+							NULL;
 
-end Behavioral;
+					END CASE;
+				END IF;
+			WHEN OTHERS =>
+				NULL;
+		END CASE;
+	END PROCESS;
+
+END Behavioral;

@@ -33,29 +33,27 @@ BEGIN
     BEGIN
         IF rising_edge(clk_in) THEN
             IF reg_write = '0' THEN
-					case ctrl_address_read_A is
-						when "00" =>
-							data_out_1 <= REGISTERS_RD(to_integer(unsigned(address_rd)));
-						when "01" =>
-							data_out_1 <= REGISTERS(to_integer(unsigned(address_rf2)));
-						when others =>
-							data_out_1 <= REGISTERS(to_integer(unsigned(address_sp)));
-                end case;
+                CASE ctrl_address_read_A IS
+                    WHEN "00" =>
+                        data_out_1 <= REGISTERS_RD(to_integer(unsigned(address_rd)));
+                    WHEN "01" =>
+                        data_out_1 <= REGISTERS(to_integer(unsigned(address_rf2)));
+                    WHEN OTHERS =>
+                        data_out_1 <= REGISTERS(to_integer(unsigned(address_sp)));
+                END CASE;
 
                 data_out_2 <= REGISTERS(to_integer(unsigned(address_rf1)));
             ELSE
-					case ctrl_reg_dest is 
-						when "00" =>
-							REGISTERS_RD(to_integer(unsigned(address_rd))) <= write_data;
-						when "01" =>
-							REGISTERS_RD(to_integer(unsigned(address_rf1))) <= write_data;
-						when "10" =>
-							REGISTERS_RD(to_integer(unsigned(address_j))) <= write_data;
-						when others =>
-							REGISTERS_RD(to_integer(unsigned(address_sp))) <= write_data;
-					end case;
-
-                
+                CASE ctrl_reg_dest IS
+                    WHEN "00" =>
+                        REGISTERS_RD(to_integer(unsigned(address_rd))) <= write_data;
+                    WHEN "01" =>
+                        REGISTERS(to_integer(unsigned(address_rf1))) <= write_data;
+                    WHEN "10" =>
+                        REGISTERS(to_integer(unsigned(address_j))) <= write_data;
+                    WHEN OTHERS =>
+                        REGISTERS(to_integer(unsigned(address_sp))) <= write_data;
+                END CASE;
             END IF;
         END IF;
     END PROCESS;
